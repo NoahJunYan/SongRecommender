@@ -18,13 +18,14 @@ filtered_data['track_name'] = filtered_data['track_name'].astype(str)  # Ensure 
 # Convert 'playlist_subgenre' to numeric using one-hot encoding
 data_encoded = pd.get_dummies(filtered_data['playlist_subgenre'])
 
+features_to_scale = ['speechiness', 'tempo']
+
 # Scale 'speechiness' and 'tempo'
 scaler = StandardScaler()
-filtered_data.loc[:, 'speechiness'] = scaler.fit_transform(filtered_data[['speechiness']])
-filtered_data.loc[:, 'tempo'] = scaler.fit_transform(filtered_data[['tempo']])
+filtered_data[features_to_scale] = scaler.fit_transform(filtered_data[features_to_scale])
 
 # Combine encoded and scaled features
-features = pd.concat([data_encoded, filtered_data[['speechiness', 'tempo']]], axis=1)
+features = pd.concat([data_encoded, filtered_data[features_to_scale], axis=1)
 
 # Train the k-nearest neighbors model
 knn = NearestNeighbors(n_neighbors=10, metric='euclidean')
