@@ -10,11 +10,14 @@ from youtubesearchpython import VideosSearch  # For searching YouTube links
 data = pd.read_csv("AIStreamLit/spotify_songs.csv")
 
 # Select only the required columns
-filtered_data = data[['track_artist', 'track_name', 'danceability', 'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']]
+filtered_data = data[['track_artist', 'track_name', 'danceability', 'energy', 'playlist_subgenre', 'speechiness', 'acousticness', 'instrumentalness', 'valence', 'tempo']]
 
 # Drop rows where 'track_name' or 'track_artist' is NaN
 filtered_data = filtered_data.dropna(subset=['track_name', 'track_artist'])
 filtered_data['track_name'] = filtered_data['track_name'].astype(str)  # Ensure all track names are strings
+
+#Convert 'playlist_subgenre' to numeric using one-hot encoding
+data_encoded = pd.get_dummies(filtered_data['playlist_subgenre'])
 
 # List of features to scale
 features_to_scale = ['danceability', 'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
@@ -24,7 +27,7 @@ scaler = StandardScaler()
 filtered_data[features_to_scale] = scaler.fit_transform(filtered_data[features_to_scale])
 
 # Combine encoded and scaled features
-features = pd.concat([filtered_data[features_to_scale]], axis=1)
+features = pd.concat([data_encoded, filtered_data[features_to_scale]], axis=1)
 
 # Train the k-nearest neighbors model
 knn = NearestNeighbors(n_neighbors=10, metric='euclidean')
