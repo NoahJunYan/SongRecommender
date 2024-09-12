@@ -20,7 +20,7 @@ filtered_data['track_name'] = filtered_data['track_name'].astype(str)  # Ensure 
 data_encoded = pd.get_dummies(filtered_data['playlist_subgenre'])
 
 # List of features to scale
-features_to_scale = ['danceability', 'energy', 'playlist_subgenre', 'speechiness', 'acousticness', 'instrumentalness', 'valence', 'tempo']
+features_to_scale = ['danceability', 'energy', 'speechiness', 'acousticness', 'instrumentalness', 'valence', 'tempo']
 
 # Scale 'speechiness' and 'tempo'
 scaler = StandardScaler()
