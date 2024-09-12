@@ -16,9 +16,6 @@ filtered_data = data[['track_artist', 'track_name', 'danceability', 'energy', 'k
 filtered_data = filtered_data.dropna(subset=['track_name', 'track_artist'])
 filtered_data['track_name'] = filtered_data['track_name'].astype(str)  # Ensure all track names are strings
 
-# Convert 'playlist_subgenre' to numeric using one-hot encoding
-data_encoded = pd.get_dummies(filtered_data['playlist_subgenre'])
-
 # List of features to scale
 features_to_scale = ['danceability', 'energy', 'key', 'loudness', 'mode', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
 
