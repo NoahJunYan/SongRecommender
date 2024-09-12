@@ -1,11 +1,11 @@
-!pip install youtube-search-python
-
 # Imports
 import streamlit as st
 import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import StandardScaler
 import difflib  # Import difflib for fuzzy matching
+
+pip install youtube-search-python
 from youtubesearchpython import VideosSearch  # For searching YouTube links
 
 # Load the dataset
