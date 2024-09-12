@@ -1,3 +1,5 @@
+!pip install youtube-search-python
+
 # Imports
 import streamlit as st
 import pandas as pd
