@@ -4,6 +4,9 @@ import pandas as pd
 from sklearn.neighbors import NearestNeighbors
 from sklearn.preprocessing import StandardScaler
 import difflib  # Import difflib for fuzzy matching
+from sklearn.decomposition import PCA  # Import PCA
+import matplotlib.pyplot as plt  # Import Matplotlib for plotting
+import seaborn as sns  # Optional: For better visuals
 from youtubesearchpython import VideosSearch  # For searching YouTube links
 
 # Load the dataset
