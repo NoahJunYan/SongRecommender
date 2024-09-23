@@ -52,6 +52,31 @@ def get_youtube_link(song_name, artist_name):
     else:
         return None
 
+def plot_knn(input_features, neighbors_indices):
+    # Apply PCA to reduce dimensions
+    pca = PCA(n_components=2)
+    features_2d = pca.fit_transform(features)
+    
+    # Plot the points
+    plt.figure(figsize=(10, 6))
+    
+    # Plot all the songs
+    sns.scatterplot(x=features_2d[:, 0], y=features_2d[:, 1], alpha=0.5, label="All Songs")
+    
+    # Plot the input song
+    input_2d = pca.transform(input_features)
+    plt.scatter(input_2d[:, 0], input_2d[:, 1], color='red', s=100, label="Input Song")
+    
+    # Plot the neighbors
+    for idx in neighbors_indices[0]:
+        plt.scatter(features_2d[idx, 0], features_2d[idx, 1], color='green', s=100, label="Recommendation")
+    
+    plt.title("KNN Song Recommendations")
+    plt.xlabel("PCA Component 1")
+    plt.ylabel("PCA Component 2")
+    plt.legend()
+    st.pyplot(plt)
+
 # Song recommendation function
 def recommend_song(song_name, artist_name):
     # Find the closest matching song and artist in the dataset
@@ -89,6 +114,8 @@ def recommend_song(song_name, artist_name):
                 st.write(f"'{song}' by {artist}: [YouTube Link]({youtube_link})")
             else:
                 st.write(f"'{song}' by {artist}: No YouTube link found")
+
+    plot_knn(input_features, indices)
 
 # Streamlit interface
 st.title("Spotify Song Recommender")
